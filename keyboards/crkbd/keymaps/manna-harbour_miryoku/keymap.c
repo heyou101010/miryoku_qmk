@@ -12,15 +12,6 @@
 enum layers { BASE, BUTTON, MEDIA, NAV, MOUSE, SYM, NUM, FUN };
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
-  // Register encoder clicks
-  if (keycode == RT_ENC) {
-    tap_code16(C(KC_0));
-    return false;
-  } else if (keycode == LT_ENC) {
-    tap_code16(KC_MUTE);
-    return false;
-  }
-
   // if (!process_achordion(keycode, record)) { return false; }
   // // Your macros ...
 
@@ -31,6 +22,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
   [BASE] = { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
 };
+
+  #if defined(SWAP_HANDS_ENABLE)
+  const uint8_t PROGMEM encoder_hand_swap_config[NUM_ENCODERS] = { 1, 0 };
+  #endif
 #endif
 
 // void matrix_scan_user(void) {
