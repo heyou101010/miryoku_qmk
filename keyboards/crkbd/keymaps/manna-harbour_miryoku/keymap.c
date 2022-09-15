@@ -7,9 +7,8 @@
 #include QMK_KEYBOARD_H
 #include <stdio.h>
 #include "features/encoder.h"
+#include "manna-harbour_miryoku.h"
 // #include "features/achordion.h"
-
-enum layers { BASE, BUTTON, MEDIA, NAV, MOUSE, SYM, NUM, FUN };
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
   // if (!process_achordion(keycode, record)) { return false; }
@@ -20,7 +19,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
 #if defined(ENCODER_MAP_ENABLE)
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
-  [BASE] = { ENCODER_CCW_CW(KC_MS_WH_UP, KC_MS_WH_DOWN), ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
+  #define MIRYOKU_X(LAYER, STRING) [U_##LAYER] = { ENCODER_CCW_CW(KC_MS_WH_DOWN, KC_MS_WH_UP), ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
+  MIRYOKU_LAYER_LIST
+  #undef MIRYOKU_X
 };
 
   #if defined(SWAP_HANDS_ENABLE)
@@ -55,35 +56,15 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 }
 
 void oled_render_layer_state(void) {
-  oled_write("Layer: ", false);
-
-  switch (get_highest_layer(layer_state)) {
-  case BASE:
-    oled_write("Base", false);
-    break;
-  case BUTTON:
-    oled_write("Button", false);
-    break;
-  case MEDIA:
-    oled_write("Media", false);
-    break;
-  case NAV:
-    oled_write("Navigation", false);
-    break;
-  case MOUSE:
-    oled_write("Mouse", false);
-    break;
-  case SYM:
-    oled_write("Symbol", false);
-    break;
-  case NUM:
-    oled_write("Number", false);
-    break;
-  case FUN:
-    oled_write("Function", false);
-    break;
+  uint8_t layer_num = get_highest_layer(layer_state);
+  char layer [11];
+  sprintf(layer, "Layer :%d: ", layer_num);
+  oled_write(layer, false);
+  switch (layer_num) {
+    #define MIRYOKU_X(LAYER, STRING) case U_##LAYER: oled_write(STRING, false); break;
+    MIRYOKU_LAYER_LIST
+    #undef MIRYOKU_X
   }
-
   oled_write("\n", false);
 }
 
