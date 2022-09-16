@@ -10,10 +10,12 @@
 #include "manna-harbour_miryoku.h"
 // #include "features/achordion.h"
 
+static bool
+
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
   // if (!process_achordion(keycode, record)) { return false; }
   // // Your macros ...
-
+  if (keycode == MAGIC_TOGGLE_CTL_GUI)
   return true;
 }
 
@@ -95,11 +97,28 @@ void oled_render_logo(void) {
   oled_write_P(crkbd_logo, false);
 }
 
+void render_bootmagic_status(void) {
+    /* Show Ctrl-Gui Swap options */
+    static const char PROGMEM logo[][2][3] = {
+        {{0x97, 0x98, 0}, {0xb7, 0xb8, 0}},
+        {{0x95, 0x96, 0}, {0xb5, 0xb6, 0}},
+    };
+    oled_write_P(PSTR("BTMGK"), false);
+    oled_write_P(PSTR(" "), false);
+    oled_write_P(logo[0][0], !keymap_config.swap_lctl_lgui);
+    oled_write_P(logo[1][0], keymap_config.swap_lctl_lgui);
+    oled_write_P(PSTR(" "), false);
+    oled_write_P(logo[0][1], !keymap_config.swap_lctl_lgui);
+    oled_write_P(logo[1][1], keymap_config.swap_lctl_lgui);
+    oled_write_P(PSTR(" NKRO"), keymap_config.nkro);
+}
+
 bool oled_task_user(void) {
   if (is_keyboard_master()) {
     oled_render_layer_state();
     oled_render_mod_state();
     oled_render_led_state();
+    render_bootmagic_status()
   } else {
     oled_render_logo();
   }
