@@ -10,12 +10,9 @@
 #include "manna-harbour_miryoku.h"
 // #include "features/achordion.h"
 
-static bool
-
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
   // if (!process_achordion(keycode, record)) { return false; }
   // // Your macros ...
-  if (keycode == MAGIC_TOGGLE_CTL_GUI)
   return true;
 }
 
@@ -118,7 +115,7 @@ bool oled_task_user(void) {
     oled_render_layer_state();
     oled_render_mod_state();
     oled_render_led_state();
-    render_bootmagic_status()
+    render_bootmagic_status();
   } else {
     oled_render_logo();
   }
