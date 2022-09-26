@@ -44,6 +44,14 @@ combo_t key_combos[COMBO_COUNT] = {
 
 /**************  CUSTOM CODE ***************/
 
+bool process_record_user(uint16_t keycode, keyrecord_t* record) {
+  switch(keycode){
+    case KC_F13: tap_code16(MAGIC_TOGGLE_CTL_GUI); return false;
+    case KC_F14: tap_code16(CAPS_WORD); return false;
+    default: return true;
+  }  
+}
+
 #if defined(ENCODER_MAP_ENABLE)
 const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
   #define MIRYOKU_X(LAYER, STRING) [U_##LAYER] = { ENCODER_CCW_CW(KC_MS_WH_DOWN, KC_MS_WH_UP), ENCODER_CCW_CW(KC_VOLD, KC_VOLU) },
