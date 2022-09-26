@@ -12,7 +12,7 @@
 MIRYOKU_X(BASE,   "Base") \
 MIRYOKU_X(EXTRA,  "Extra") \
 MIRYOKU_X(TAP,    "Tap") \
-MIRYOKU_X(BUTTON, "Button") \
+MIRYOKU_X(BUTTON, "Btn") \
 MIRYOKU_X(NAV,    "Nav") \
 MIRYOKU_X(MOUSE,  "Mouse") \
 MIRYOKU_X(MEDIA,  "Media") \
