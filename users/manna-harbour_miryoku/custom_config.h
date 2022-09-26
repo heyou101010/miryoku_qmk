@@ -5,3 +5,26 @@
 
 #pragma once
 
+#ifdef KEYBOARD_crkbd_rev1_common
+#    undef USE_I2C
+#    define USE_SERIAL
+#endif
+
+/* Select hand configuration */
+
+#define MASTER_LEFT
+// #define MASTER_RIGHT
+// #define EE_HANDS
+
+#define USE_SERIAL_PD2
+
+#define PERMISSIVE_HOLD
+#define TAPPING_FORCE_HOLD
+
+#define ENCODERS_PAD_A { B4 }
+#define ENCODERS_PAD_B { B5 }
+
+#ifdef OLED_FONT_H
+       #undef OLED_FONT_H
+#endif
+#define OLED_FONT_H "keyboards/crkbd/lib/glcdfont.c"
