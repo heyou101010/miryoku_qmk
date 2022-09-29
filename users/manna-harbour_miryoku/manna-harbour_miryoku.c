@@ -44,10 +44,11 @@ combo_t key_combos[COMBO_COUNT] = {
 
 /**************  CUSTOM CODE ***************/
 
+#include "config.h"
+
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
   switch(keycode){
-    case KC_F13: tap_code16(MAGIC_TOGGLE_CTL_GUI); return false;
-    case KC_F14: tap_code16(CAPS_WORD); return false;
+    case F13: tap_code16(CAPS_WORD); return false;
     default: return true;
   }  
 }
